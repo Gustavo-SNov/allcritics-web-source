@@ -1,5 +1,7 @@
 "use client"
 
+import Logo from "@/components/ui/logo";
+
 const Footer = () => {
 
     return (
@@ -7,12 +9,7 @@ const Footer = () => {
             <div className="container mx-auto px-4">
                 <div className="grid md:grid-cols-4 gap-8">
                     <div className="space-y-4">
-                        <div className="flex items-center space-x-2">
-                            <div className="bg-purple-600 p-2 rounded-lg">
-                                <span className="text-white font-bold">★</span>
-                            </div>
-                            <span className="text-xl font-bold text-white">AllCritics</span>
-                        </div>
+                        <Logo/>
                         <p className="text-gray-400">
                             Junte-se à comunidade de críticos e compartilhe suas ideias sobre diversas mídias.
                         </p>
