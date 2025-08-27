@@ -1,35 +1,35 @@
-import {contentService} from "@/services/contentService";
 import {useCallback, useState} from "react";
-import {Content, ContentFilter, PageContentType} from "@/types/Content";
-import {PaginationParams} from "@/types/Pagination";
+import {reviewService} from "@/services/reviewService";
+import {ReviewFilter, Review} from "@/types/Review";
+import {PaginationParams, Page} from "@/types/Pagination";
 
-export const useContent = () => {
-    const [pageData, setPageData] = useState<PageContentType<Content> | null>(null);
+export const useReview = () => {
+    const [pageData, setPageData] = useState<Page<Review> | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
-    const fetchContents = useCallback(async (
-        contentFilter?: ContentFilter,
+    const fetchReviews = useCallback(async (
+        reviewFilter?: ReviewFilter,
         page: number = 0,
-        size: number = 6
+        size: number = 3
     ) => {
         setLoading(true);
         setError(null);
 
         try {
             const paginationParams: PaginationParams = {page, size};
-            const data = await contentService.getContent(contentFilter, paginationParams);
+            const data = await reviewService.getReviews(reviewFilter, paginationParams);
             setPageData(data);
-        } catch (error) {
-            console.error("Erro ao carregar os conteúdos: ", error);
-            setError("Não foi possível carregar o conteúdo. Tente novamente mais tarde.");
+        } catch (error){
+            console.error("Erro ao carregar os reviews: ", error);
+            setError("Não foi possível carregar os reviews. Tente novamente mais tarde.");
         } finally {
             setLoading(false);
         }
-    }, []);
+    },[]);
 
     return {
-        contents: pageData?.content || [],
+        reviews: pageData?.content || [],
         pageInfo: { // Informações úteis para a UI de paginação
             totalPages: pageData?.totalPages || 0,
             totalElements: pageData?.totalElements || 0,
@@ -39,6 +39,6 @@ export const useContent = () => {
         },
         loading,
         error,
-        fetchContents,
+        fetchReviews,
     }
 }

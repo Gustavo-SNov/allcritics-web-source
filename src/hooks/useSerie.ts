@@ -1,24 +1,26 @@
-import {contentService} from "@/services/contentService";
+import {seriesService} from "@/services/serieService";
 import {useCallback, useState} from "react";
 import {Content, ContentFilter, PageContentType} from "@/types/Content";
 import {PaginationParams} from "@/types/Pagination";
 
-export const useContent = () => {
+
+export const useSerie = () => {
     const [pageData, setPageData] = useState<PageContentType<Content> | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
-    const fetchContents = useCallback(async (
+    const fetchSeries = useCallback(async (
         contentFilter?: ContentFilter,
         page: number = 0,
-        size: number = 6
+        size: number = 6,
+        sort: string = "averageRating,desc"
     ) => {
         setLoading(true);
         setError(null);
 
         try {
-            const paginationParams: PaginationParams = {page, size};
-            const data = await contentService.getContent(contentFilter, paginationParams);
+            const paginationParams: PaginationParams = {page, size,sort};
+            const data = await seriesService.getSeries(contentFilter, paginationParams);
             setPageData(data);
         } catch (error) {
             console.error("Erro ao carregar os conteúdos: ", error);
@@ -29,7 +31,7 @@ export const useContent = () => {
     }, []);
 
     return {
-        contents: pageData?.content || [],
+        series: pageData?.content || [],
         pageInfo: { // Informações úteis para a UI de paginação
             totalPages: pageData?.totalPages || 0,
             totalElements: pageData?.totalElements || 0,
@@ -39,6 +41,6 @@ export const useContent = () => {
         },
         loading,
         error,
-        fetchContents,
+        fetchSeries,
     }
 }
