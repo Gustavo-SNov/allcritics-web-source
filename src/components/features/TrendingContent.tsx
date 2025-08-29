@@ -3,7 +3,7 @@ import {useMovie} from "@/hooks/useMovie";
 import {useGame} from "@/hooks/useGame";
 import {useSerie} from "@/hooks/useSerie";
 import {useEffect, useState} from "react";
-import {Carousel} from "@/components/ui/Carousel";
+import {Carousel} from "@/components/ui/carousel/Carousel";
 import {Card} from "@/components/ui/card";
 import {Content} from "@/types/Content";
 import Image from "next/image";
@@ -14,16 +14,32 @@ const TrendingContent = () => {
     const {series, fetchSeries} = useSerie();
     const {games, fetchGames} = useGame();
     const [hoveredItem, setHoveredItem] = useState<number | string | null>(null)
+
+
     useEffect(() => {
-        fetchMovies();
-        fetchSeries();
-        fetchGames();
+        // Define uma função async e a chama imediatamente.
+        const fetchData = async () => {
+            try {
+                // Lembrete: Dessa forma, caso seja necessário rodar em sequência
+                // await fetchMovies();
+                // await fetchSeries();
+                // await fetchGames();
+
+                // Execução paralelo para melhor performance
+                await Promise.all([
+                    fetchMovies(),
+                    fetchSeries(),
+                    fetchGames()
+                ]);
+            } catch (error) {
+                console.error("Ocorreu um erro ao buscar os dados:", error);
+            }
+        };
+
+        fetchData();
+
     }, [fetchMovies, fetchSeries, fetchGames]);
 
-
-    console.log("Movies Fetched: ", movies);
-    console.log("Series Fetched: ", series);
-    console.log("Games Fetched: ", games);
 
     const renderItemCard = (item: Content) => (
 

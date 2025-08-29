@@ -6,7 +6,7 @@ import {Button} from "@/components/ui/button";
 
 // import ContentCarousel from "@/components/features/ContentCarousel";
 import {useEffect} from "react";
-import {Carousel} from "@/components/ui/Carousel";
+import {Carousel} from "@/components/ui/carousel/Carousel";
 import ContentCard from "@/components/features/ContentCard";
 
 const Dashboard = () => {
