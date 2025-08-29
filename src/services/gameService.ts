@@ -16,7 +16,6 @@ export const gamesService = {
             params
         });
 
-        console.log("Response Game:", response);
         return response.data;
     }
 }

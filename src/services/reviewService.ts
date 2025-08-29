@@ -13,7 +13,6 @@ export const reviewService = {
             ...pagination
         }
         const response = await api.get<Page<Review>>(REVIEW_URL,{params});
-        console.log("Response Review:", response);
         return response.data;
     }
 

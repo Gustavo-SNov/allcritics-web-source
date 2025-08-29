@@ -16,7 +16,6 @@ export const contentService = {
             params
         });
 
-        console.log("Response Content:", response);
         return response.data;
     }
 }

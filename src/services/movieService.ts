@@ -16,7 +16,6 @@ export const movieService = {
             params
         });
 
-        console.log("Response Movie:", response);
         return response.data;
     }
 }

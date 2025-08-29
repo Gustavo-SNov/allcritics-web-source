@@ -16,7 +16,6 @@ export const seriesService = {
             params
         });
 
-        console.log("Response Serie:", response);
         return response.data;
     }
 }
