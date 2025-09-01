@@ -3,7 +3,7 @@ import {User} from "@/types/User"
 
 export const REVIEW_URL = "/review";
 
-export interface Review {
+export interface ReviewProps {
     idReview: number;
     title: string;
     rate: number;
@@ -19,7 +19,7 @@ export interface ReviewFilter {
 }
 
 export interface ReviewCardProps{
-    review: Review;
+    review: ReviewProps;
     user: User;
     content: Content;
 }

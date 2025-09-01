@@ -15,9 +15,9 @@ const Navbar = () => {
 
                     <div className="hidden md:flex items-center space-x-8">
                         <Link href="/home" className="text-gray-300 hover:text-white transition-colors">Home</Link>
-                        <Link href="/filme" className="text-gray-300 hover:text-white transition-colors">Filmes</Link>
-                        <Link href="/serie" className="text-gray-300 hover:text-white transition-colors">Séries</Link>
-                        <Link href="/jogo" className="text-gray-300 hover:text-white transition-colors">Jogos</Link>
+                        <Link href="content/movie" className="text-gray-300 hover:text-white transition-colors">Movies</Link>
+                        <Link href="content/serie" className="text-gray-300 hover:text-white transition-colors">Series</Link>
+                        <Link href="content/game" className="text-gray-300 hover:text-white transition-colors">Games</Link>
                     </div>
 
                     <div className="hidden md:flex relative flex-1 max-w-md mx-8">

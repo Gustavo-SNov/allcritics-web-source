@@ -1,4 +1,4 @@
-import {ReviewCardProps} from "@/types/Review";
+import {ReviewProps} from "@/types/Review";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar"
 import {Card, CardContent} from "@/components/ui/card";
 import {Star} from "lucide-react"
@@ -7,13 +7,15 @@ import {formatDistanceToNow} from 'date-fns';
 import {ptBR} from 'date-fns/locale';
 import Image from "next/image";
 
-const ReviewCard = ({review, user, content}: ReviewCardProps) => {
+const ReviewCard = (review: ReviewProps) => {
+
     const reviewDate = new Date(review.createdAt)
 
-    const formattedRelativeDate = formatDistanceToNow(reviewDate, {
+    const formattedRelativeDate: string = formatDistanceToNow(reviewDate, {
         addSuffix: true, // Adiciona o prefixo/sufixo ("há" ou "em")
         locale: ptBR,    // Usa o locale para traduzir para português
     });
+
     return (
         <Card className="bg-gray-800/50 border-gray-700 p-6 transition-all duration-300 hover:bg-gray-800/70">
             <CardContent className="p-0">
@@ -21,9 +23,9 @@ const ReviewCard = ({review, user, content}: ReviewCardProps) => {
                     {/* User Info */}
                     <div className="flex-shrink-0">
                         <Avatar className="w-12 h-12">
-                            <AvatarImage src={user.profileImageUrl}/>
+                            <AvatarImage src={review.user.profileImageUrl}/>
                             <AvatarFallback className="bg-purple-600 text-white">
-                                {user.username.substring(0, 2)}
+                                {review.user.username.substring(0, 2)}
                             </AvatarFallback>
                         </Avatar>
                     </div>
@@ -58,15 +60,15 @@ const ReviewCard = ({review, user, content}: ReviewCardProps) => {
                             <div
                                 className="w-12 h-16 bg-gradient-to-br from-gray-600 to-gray-800 rounded flex items-center justify-center text-xs text-gray-400">
                                 <Image
-                                    src={content.imageURL}
-                                    alt={`Poster de ${content.title}`}
+                                    src={review.content.imageURL}
+                                    alt={`Poster de ${review.content.title}`}
                                     width={300}
                                     height={400}
                                 />
                             </div>
                             <div>
-                                <h5 className="text-white font-medium">{content.title}</h5>
-                                <span className="text-sm text-gray-400 capitalize">{content.contentType}</span>
+                                <h5 className="text-white font-medium">{review.content.title}</h5>
+                                <span className="text-sm text-gray-400 capitalize">{review.content.contentType}</span>
                             </div>
                         </div>
                     </div>

@@ -15,7 +15,7 @@ export const MultiItemCarousel = ({ children, title, loop, itemsPerPage = 5 }: C
     const slideWidthPercentage = 100 / itemsPerPage;
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-4" >
             <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold text-white">{title}</h2>
                 <div className="flex space-x-2">

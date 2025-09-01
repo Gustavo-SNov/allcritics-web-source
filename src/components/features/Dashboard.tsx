@@ -1,13 +1,12 @@
 "use client"
 
+
+import {useEffect} from "react";
 import {useContent} from "@/hooks/useContent";
 
 import {Button} from "@/components/ui/button";
-
-// import ContentCarousel from "@/components/features/ContentCarousel";
-import {useEffect} from "react";
 import {Carousel} from "@/components/ui/carousel/Carousel";
-import ContentCard from "@/components/features/ContentCard";
+import {CardAllCritics} from "@/components/features/cards/CardAllCritics";
 
 const Dashboard = () => {
     const {contents, fetchContents} = useContent();
@@ -41,22 +40,12 @@ const Dashboard = () => {
                         </Button>
                     </div>
 
-                    {/*<ContentCarousel />*/}
                     <div className="flex justify-center lg:justify-end">
                         <div className="relative max-w-sm w-full">
                             {contents.length > 0 && (
                                 <Carousel variant="hero" autoplay={true} loop={true}>
                                     {contents.map((content) => (
-                                        <ContentCard
-                                            key={content.idContent}
-                                            idContent={content.idContent}
-                                            title={content.title}
-                                            description={content.description}
-                                            contentType={content.contentType}
-                                            imageURL={content.imageURL}
-                                            releaseDate={content.releaseDate}
-                                            averageRating={content.averageRating}
-                                        />
+                                        <CardAllCritics variant="hero" key={content.idContent} content={content}/>
                                     ))}
                                 </Carousel>
                             )}

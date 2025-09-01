@@ -1,11 +1,17 @@
-import Image from "next/image";
-import {Star} from "lucide-react"
-import {Content} from "@/types/Content";
-import {Card} from "@/components/ui/card";
+"use client";
 
-const ContentCard = (content: Content) => {
+import {Card} from "@/components/ui/card";
+import Image from "next/image";
+import {Star} from "lucide-react";
+import {Content} from "@/types/Content";
+
+
+export const HeroCard = (content: Content) => {
+
     return (
-        <Card className="bg-gray-800/50 border-gray-700 p-6 backdrop-blur-sm">
+        <Card className="bg-gray-800/50 border-gray-700 p-6 backdrop-blur-sm"
+              key={content.idContent}
+        >
             <div className="space-y-4">
                 <div className={`aspect-[3/4] rounded-lg flex items-center justify-center overflow-hidden shadow-lg`}>
                     {content.imageURL ? (
@@ -38,5 +44,3 @@ const ContentCard = (content: Content) => {
         </Card>
     )
 }
-
-export default ContentCard;

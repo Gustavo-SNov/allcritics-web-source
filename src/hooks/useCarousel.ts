@@ -29,9 +29,6 @@ export const useCarousel = ({
         setCurrentIndex(Math.max(0, Math.min(index, maxIndex)));
     }, [maxIndex]);
 
-    // O useEffect do autoplay e da navegação por teclado permanecem nos componentes
-    // que efetivamente os renderizam, ou poderiam ser movidos para cá também.
-    // Por simplicidade, vamos mantê-los nos componentes visuais.
 
     return {
         currentIndex,

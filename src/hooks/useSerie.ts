@@ -11,16 +11,15 @@ export const useSerie = () => {
 
     const fetchSeries = useCallback(async (
         contentFilter?: ContentFilter,
-        page: number = 0,
-        size: number = 6,
-        sort: string = "averageRating,desc"
+        pagination?: PaginationParams,
+
     ) => {
         setLoading(true);
         setError(null);
 
         try {
-            const paginationParams: PaginationParams = {page, size,sort};
-            const data = await seriesService.getSeries(contentFilter, paginationParams);
+
+            const data = await seriesService.getSeries(contentFilter, pagination);
             setPageData(data);
         } catch (error) {
             console.error("Erro ao carregar os conteúdos: ", error);

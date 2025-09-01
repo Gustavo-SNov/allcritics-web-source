@@ -1,24 +1,22 @@
 import {useCallback, useState} from "react";
 import {reviewService} from "@/services/reviewService";
-import {ReviewFilter, Review} from "@/types/Review";
+import {ReviewFilter, ReviewProps} from "@/types/Review";
 import {PaginationParams, Page} from "@/types/Pagination";
 
 export const useReview = () => {
-    const [pageData, setPageData] = useState<Page<Review> | null>(null);
+    const [pageData, setPageData] = useState<Page<ReviewProps> | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
     const fetchReviews = useCallback(async (
         reviewFilter?: ReviewFilter,
-        page: number = 0,
-        size: number = 3
+        pagination?: PaginationParams,
     ) => {
         setLoading(true);
         setError(null);
 
         try {
-            const paginationParams: PaginationParams = {page, size};
-            const data = await reviewService.getReviews(reviewFilter, paginationParams);
+            const data = await reviewService.getReviews(reviewFilter, pagination);
             setPageData(data);
         } catch (error){
             console.error("Erro ao carregar os reviews: ", error);

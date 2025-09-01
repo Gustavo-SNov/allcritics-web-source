@@ -11,16 +11,14 @@ export const useMovie = () => {
 
     const fetchMovies = useCallback(async (
         contentFilter?: ContentFilter,
-        page: number = 0,
-        size: number = 6,
-        sort: string = "averageRating,desc"
+        pagination?: PaginationParams,
     ) => {
         setLoading(true);
         setError(null);
 
         try {
-            const paginationParams: PaginationParams = {page, size,sort};
-            const data = await movieService.getMovies(contentFilter, paginationParams);
+
+            const data = await movieService.getMovies(contentFilter, pagination);
             setPageData(data);
         } catch (error) {
             console.error("Erro ao carregar os conteúdos: ", error);

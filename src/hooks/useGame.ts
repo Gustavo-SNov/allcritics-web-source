@@ -11,16 +11,12 @@ export const useGame = () => {
 
     const fetchGames = useCallback(async (
         contentFilter?: ContentFilter,
-        page: number = 0,
-        size: number = 6,
-        sort: string = "averageRating,desc"
+        pagination?: PaginationParams,
     ) => {
         setLoading(true);
         setError(null);
-
         try {
-            const paginationParams: PaginationParams = {page, size,sort};
-            const data = await gamesService.getGames(contentFilter, paginationParams);
+            const data = await gamesService.getGames(contentFilter, pagination);
             setPageData(data);
         } catch (error) {
             console.error("Erro ao carregar os conteúdos: ", error);
