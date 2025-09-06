@@ -1,3 +1,4 @@
+import {PaginationParams} from "@/types/Pagination";
 
 export interface Content {
     idContent: string | number;
@@ -34,11 +35,15 @@ export interface PageContentType<T> {
     last?: boolean;
 }
 
-export type ContentTypeFilter = 'MOVIE' | 'SERIE' | 'GAME' | 'BOOK';
 
 export interface ContentFilter {
-    contentFilter?: ContentTypeFilter;
-    spliced?: boolean;
+    contentType?: ContentType;
+    category?: string;
     ranked?: boolean;
+}
+
+export interface ContentsParams extends PaginationParams {
+    contentType?: ContentType;
+    category?: string;
 }
 

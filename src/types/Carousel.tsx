@@ -1,6 +1,6 @@
 import React from "react";
 
-type CarouselVariant = "hero" | "multi-item" | "review-carousel";
+export type CarouselVariant = "hero" | "multi-item" | "review-carousel";
 
 export interface CarouselProps {
     variant?: CarouselVariant;

@@ -1,7 +1,7 @@
 import {contentService} from "@/services/contentService";
 import {useCallback, useState} from "react";
-import {Content, ContentFilter, PageContentType} from "@/types/Content";
-import {PaginationParams} from "@/types/Pagination";
+import {Content, PageContentType,  ContentsParams} from "@/types/Content";
+
 
 export const useContent = () => {
     const [pageData, setPageData] = useState<PageContentType<Content> | null>(null);
@@ -9,24 +9,22 @@ export const useContent = () => {
     const [error, setError] = useState<string | null>(null);
 
     const fetchContents = useCallback(async (
-        contentFilter?: ContentFilter,
-        page: number = 0,
-        size: number = 6
-    ) => {
-        setLoading(true);
-        setError(null);
+        contentsParams : ContentsParams,
+        ) => {
+            setLoading(true);
+            setError(null);
+            try {
+                const data = await contentService.getContent(contentsParams);
+                setPageData(data);
+            } catch (error) {
+                console.error("Erro ao carregar os conteúdos: ", error);
+                setError("Não foi possível carregar o conteúdo. Tente novamente mais tarde.");
+            } finally {
+                setLoading(false);
+            }
+        }, []
+    );
 
-        try {
-            const paginationParams: PaginationParams = {page, size};
-            const data = await contentService.getContent(contentFilter, paginationParams);
-            setPageData(data);
-        } catch (error) {
-            console.error("Erro ao carregar os conteúdos: ", error);
-            setError("Não foi possível carregar o conteúdo. Tente novamente mais tarde.");
-        } finally {
-            setLoading(false);
-        }
-    }, []);
 
     return {
         contents: pageData?.content || [],

@@ -2,7 +2,7 @@ import React from "react";
 import {Content} from "@/types/Content";
 import {ReviewProps} from "@/types/Review";
 
-type CardVariant = "hero" | "hover-card" | "review";
+export type CardVariant = "hero" | "hover-card" | "review";
 
 export interface CardProps {
     variant?: CardVariant;

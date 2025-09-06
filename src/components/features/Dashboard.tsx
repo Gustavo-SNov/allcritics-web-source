@@ -12,7 +12,7 @@ const Dashboard = () => {
     const {contents, fetchContents} = useContent();
 
     useEffect(() => {
-        fetchContents();
+        fetchContents({ page: 0, size: 6});
     }, [fetchContents]);
 
     return (
