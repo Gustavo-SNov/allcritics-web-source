@@ -9,7 +9,7 @@ const TrendingContent = () => {
             <ContentCarousel
                 carouselVariant="multi-item"
                 cardVariant="hover-card"
-                typeParam="MOVIE"
+                contentFilter={{typeParam: "MOVIE" }}
                 title="Trending Movies"
                 loop={false}
                 itemsPerPage={5}
@@ -19,7 +19,7 @@ const TrendingContent = () => {
             <ContentCarousel
                 carouselVariant="multi-item"
                 cardVariant="hover-card"
-                typeParam="SERIE"
+                contentFilter={{typeParam: "SERIE" }}
                 title="Popular Series"
                 loop={false}
                 itemsPerPage={5}
@@ -29,11 +29,10 @@ const TrendingContent = () => {
             <ContentCarousel
                 carouselVariant="multi-item"
                 cardVariant="hover-card"
-                typeParam="Game"
+                contentFilter={{typeParam: "GAME" }}
                 title="Top Games"
                 loop={false}
                 itemsPerPage={5}
-
             />
         </div>
 
