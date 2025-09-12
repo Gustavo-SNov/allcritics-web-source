@@ -1,4 +1,4 @@
-import {ReviewProps} from "@/types/Review";
+import {Review} from "@/types/Review";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar"
 import {Card, CardContent} from "@/components/ui/card";
 import {Star} from "lucide-react"
@@ -7,7 +7,7 @@ import {formatDistanceToNow} from 'date-fns';
 import {ptBR} from 'date-fns/locale';
 import Image from "next/image";
 
-const ReviewCard = (review: ReviewProps) => {
+const ReviewCard = (review: Review) => {
 
     const reviewDate = new Date(review.createdAt)
 

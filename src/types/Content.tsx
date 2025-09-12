@@ -1,5 +1,7 @@
 import {PaginationParams} from "@/types/Pagination";
 
+export const CONTENT_URL = "/content";
+
 export interface Content {
     idContent: string | number;
     title: string;

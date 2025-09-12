@@ -4,9 +4,12 @@ export interface Login{
     password: string;
 }
 
-export interface Register{
+export interface Register extends Login{
     username: string;
+}
+
+export interface AuthData{
+    username?: string;
     email: string;
     password: string;
 }
-

@@ -1,11 +1,16 @@
 "use client"
 import Link from "next/link"
-import { Search } from "lucide-react";
 
 import Logo from "@/components/ui/logo";
-import {Input} from "@/components/ui/input";
+import SearchBar from "@/components/features/SearchBar";
+import {useAuth} from "@/hooks/useAuth";
+import {User} from "lucide-react";
+import AuthModal from "@/components/features/AuthModal";
 
 const Navbar = () => {
+    const {user} = useAuth();
+
+    console.log("User: ",user);
 
     return (
         <nav className="bg-gray-900/95 backdrop-blur-sm border-b border-gray-800 sticky top-0 z-50">
@@ -20,13 +25,21 @@ const Navbar = () => {
                         <Link href="/content/game" className="text-gray-300 hover:text-white transition-colors">Games</Link>
                     </div>
 
-                    <div className="hidden md:flex relative flex-1 max-w-md mx-8">
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4"/>
-                        <Input
-                            placeholder="Search movies, series, games..."
-                            className="pl-10 bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 focus:ring-purple-500 focus:border-purple-500"
-                        />
+                    <SearchBar />
+
+                    <div className="hidden md:flex items-center space-x-4">
+                        {user ? (
+                            <Link href="/profile" className="flex items-center space-x-2 hover:bg-gray-800 p-2 rounded-lg transition-colors">
+                                <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center">
+                                    <User className="w-4 h-4 text-white" />
+                                </div>
+                                <span className="text-white">user.username</span>
+                            </Link>
+                        ) : (
+                         <AuthModal />
+                        )}
                     </div>
+
 
                 </div>
             </div>

@@ -18,7 +18,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // --- Chave para o localStorage ---
-const USER_STORAGE_KEY = '@YourAppName:user';
+const USER_STORAGE_KEY = '@AllCritics:user';
 
 // --- Componente Provedor ---
 export const AuthProvider = ({children}: { children: ReactNode }) => {

@@ -1,21 +1,19 @@
 import api from "@/lib/api";
-import {Content, PageContentType,  ContentsParams} from "@/types/Content";
-
-const CONTENT_URL = "/content";
+import {CONTENT_URL, Content, PageContentType, ContentsParams} from "@/types/Content";
 
 export const contentService = {
-    async getContent({contentType, page, size, sort, category}: ContentsParams): Promise<PageContentType<Content>> {
-        const params = {
-            contentType,
-            page,
-            size,
-            sort,
-            category,
-        }
+    getContent: async (contentsParams: ContentsParams): Promise<PageContentType<Content>> => {
+
         const response = await api.get<PageContentType<Content>>(CONTENT_URL, {
-            params
+            params: contentsParams
         });
 
+        return response.data;
+    },
+
+    getContentById: async (idContent: number): Promise<Content> => {
+        const CONTENT_ID_URL = `${CONTENT_URL}/${idContent}`;
+        const response = await api.get<Content>(CONTENT_ID_URL);
         return response.data;
     }
 }

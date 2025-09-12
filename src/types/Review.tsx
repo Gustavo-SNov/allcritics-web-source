@@ -1,9 +1,10 @@
 import {Content} from "@/types/Content"
 import {User} from "@/types/User"
+import {PaginationParams} from "@/types/Pagination";
 
 export const REVIEW_URL = "/review";
 
-export interface ReviewProps {
+export interface Review {
     idReview: number;
     title: string;
     rate: number;
@@ -13,13 +14,13 @@ export interface ReviewProps {
     user: User;
 }
 
-export interface ReviewFilter {
+export interface ReviewFilter extends PaginationParams{
     idContent?: number | string;
     idUser?: string;
 }
 
 export interface ReviewCardProps{
-    review: ReviewProps;
+    review: Review;
     user: User;
     content: Content;
 }
