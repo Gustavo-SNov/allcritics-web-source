@@ -3,14 +3,13 @@ import Link from "next/link"
 
 import Logo from "@/components/ui/logo";
 import SearchBar from "@/components/features/SearchBar";
-import {useAuth} from "@/hooks/useAuth";
-import {User} from "lucide-react";
+import {useAuth} from "@/contexts/AuthContext";
 import AuthModal from "@/components/features/AuthModal";
 
-const Navbar = () => {
-    const {user} = useAuth();
+import {Avatar, AvatarImage} from "@/components/ui/avatar";
 
-    console.log("User: ",user);
+const Navbar = () => {
+    const { user, login, register } = useAuth();
 
     return (
         <nav className="bg-gray-900/95 backdrop-blur-sm border-b border-gray-800 sticky top-0 z-50">
@@ -29,17 +28,19 @@ const Navbar = () => {
 
                     <div className="hidden md:flex items-center space-x-4">
                         {user ? (
-                            <Link href="/profile" className="flex items-center space-x-2 hover:bg-gray-800 p-2 rounded-lg transition-colors">
-                                <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center">
-                                    <User className="w-4 h-4 text-white" />
+                            <Link href={`/profile/${user.username}`} className="flex items-center space-x-2 hover:bg-gray-800 p-2 rounded-lg transition-colors">
+                                <div className="w-12 h-10 flex items-center justify-center">
+                                    <Avatar className="w-full h-full object-cover">
+                                        <AvatarImage src={user.profileImageUrl}/>
+                                    </Avatar>
+
                                 </div>
-                                <span className="text-white">user.username</span>
+                                <span className="text-white">{user.username}</span>
                             </Link>
                         ) : (
-                         <AuthModal />
+                         <AuthModal login={login} register={register}/>
                         )}
                     </div>
-
 
                 </div>
             </div>

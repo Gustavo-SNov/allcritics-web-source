@@ -4,30 +4,42 @@ import React, {useState} from "react"
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger} from "@/components/ui/dialog"
 import {Button} from "@/components/ui/button"
 import {Input} from "@/components/ui/input"
-import {LogIn,  UserPlus} from "lucide-react"
-import {AuthData} from "@/types/Auth";
+import {LogIn, UserPlus} from "lucide-react"
+import {Login, Register} from "@/types/Auth";
 
+interface AuthModalProps {
+    register(registerData: Register): Promise<void>;
 
-const AuthModal = () => {
+    login(loginData: Login): Promise<void>;
+}
+
+const AuthModal = ({register, login}: AuthModalProps) => {
     const [isLogin, setIsLogin] = useState(true)
     const [open, setOpen] = useState(false)
-    const [data, setData] = useState<AuthData>({ username: "", email: "", password: "" })
+    const [data, setData] = useState<Register>({username: "", email: "", password: ""})
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
+        const {name, value} = event.target;
         setData(prevData => ({
             ...prevData,
             [name]: value
         }));
-    }
+    };
 
-    const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
-        console.log(data);
+        try {
+            if (!isLogin) {
+                await register(data);
+            } else {
+                await login(data);
+            }
+        } catch (error) {
+            console.error("Falha na autenticação:", error);
+        }
 
-        setOpen(false);
-    }
+    };
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -50,8 +62,9 @@ const AuthModal = () => {
                                 name="username"
                                 placeholder="Username"
                                 value={data.username}
-                                className="bg-gray-800 border-gray-600 text-white placeholder:text-gray-400"
                                 onChange={handleChange}
+                                required
+                                className="bg-gray-800 border-gray-600 text-white placeholder:text-gray-400"
                             />
                         )}
                         <Input
@@ -60,6 +73,7 @@ const AuthModal = () => {
                             placeholder="Email"
                             value={data.email}
                             onChange={handleChange}
+                            required
                             className="bg-gray-800 border-gray-600 text-white placeholder:text-gray-400"
                         />
                         <Input
@@ -68,6 +82,7 @@ const AuthModal = () => {
                             placeholder="Password"
                             value={data.password}
                             onChange={handleChange}
+                            required
                             className="bg-gray-800 border-gray-600 text-white placeholder:text-gray-400"
                         />
                     </div>
