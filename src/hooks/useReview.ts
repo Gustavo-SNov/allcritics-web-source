@@ -5,11 +5,14 @@ import {Page} from "@/types/Pagination";
 
 export const useReview = () => {
     const [pageData, setPageData] = useState<Page<Review> | null>(null);
+    const [allReviews, setAllReviews] = useState<Review[]>([]);
+
     const [review, setReview] = useState<Review | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
     const [lastFilter, setLastFilter] = useState<ReviewFilter | null>(null);
+
 
     const fetchReviews = useCallback(async (
         reviewFilter?: ReviewFilter,
@@ -21,6 +24,11 @@ export const useReview = () => {
         try {
             const data = await reviewService.getReviews(reviewFilter);
             setPageData(data);
+            if (reviewFilter?.page === 0 || !reviewFilter?.page) {
+                setAllReviews(data.content);
+            } else {
+                setAllReviews(prevReviews => [...prevReviews, ...data.content]);
+            }
         } catch (error) {
             console.error("Erro ao carregar os reviews: ", error);
             setError("Não foi possível carregar os reviews. Tente novamente mais tarde.");
@@ -89,7 +97,7 @@ export const useReview = () => {
     }, []);
 
     return {
-        reviews: pageData?.content || [],
+        reviews: allReviews,
         review,
         pageInfo: { // Informações úteis para a UI de paginação
             totalPages: pageData?.totalPages || 0,

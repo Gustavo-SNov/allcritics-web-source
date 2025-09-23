@@ -2,17 +2,19 @@
 
 import {useParams} from "next/navigation";
 import {useReview} from "@/hooks/useReview";
-import {useEffect} from "react";
+import {useCallback, useEffect} from "react";
 import {useContent} from "@/hooks/useContent";
 import Image from "next/image";
-import {CardAllCritics} from "@/components/features/cards/CardAllCritics";
 import ReviewForm from "@/components/features/reviews/ReviewForm";
 import {useAuth} from "@/contexts/AuthContext";
+import ReviewList from "@/components/features/reviews/ReviewList";
+
+const PAGE_SIZE = 2;
 
 const ContentPage = () => {
     const params = useParams();
-    const {reviews, fetchReviews, createReview} = useReview();
-    const {content,fetchContent} = useContent();
+    const {reviews, pageInfo, loading, fetchReviews, createReview} = useReview();
+    const {content, fetchContent} = useContent();
     const {user} = useAuth();
     const idContent: string = params.idContent as string;
 
@@ -21,18 +23,38 @@ const ContentPage = () => {
     console.log("Content: ", content);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                await fetchReviews({idContent: idContent, sort: "createdAt,desc"});
-                await fetchContent(idContent);
-            } catch (error) {
-                console.error("Ocorreu um erro ao buscar os dados:", error);
-            }
+        if (idContent) {
+            // Busca o conteúdo e a PRIMEIRA página de reviews
+            fetchReviews({idContent: idContent, sort: "createdAt,desc", page: 0, size: PAGE_SIZE});
+            fetchContent(idContent);
         }
-        fetchData();
-    }, [fetchReviews, fetchContent, idContent]);
+    }, [idContent, fetchReviews, fetchContent]);
 
-    
+    const handleLoadMore = useCallback(() => {
+        // Só busca mais se não estiver carregando e se não for a última página
+        if (!loading && !pageInfo.isLast) {
+            fetchReviews({
+                idContent: idContent,
+                sort: "createdAt,desc",
+                page: pageInfo.currentPage + 1, // Pede a próxima página
+                size: PAGE_SIZE
+            });
+        }
+    }, [loading, pageInfo, idContent, fetchReviews]);
+
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             await fetchReviews({idContent: idContent, sort: "createdAt,desc", page: page, size: 4});
+    //             await fetchContent(idContent);
+    //         } catch (error) {
+    //             console.error("Ocorreu um erro ao buscar os dados:", error);
+    //         }
+    //     }
+    //     fetchData();
+    // }, [fetchReviews, fetchContent, idContent]);
+
+
     return (
         <div className="bg-gray-900 text-white min-h-screen">
             <div className="container mx-auto px-4 py-8">
@@ -72,24 +94,16 @@ const ContentPage = () => {
                     <div className="mb-8">
                         {
                             content && user ?
-                                <ReviewForm content={content} createReview={createReview} />
+                                <ReviewForm content={content} createReview={createReview}/>
                                 : null
                         }
                     </div>
-
-                    {reviews.length > 0 ? (
-                        // 1. Container agora usa Grid em vez de Flex
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                            {reviews.map((review, index) => (
-                                // Cada ReviewCard é um item do grid
-                                <CardAllCritics variant="review" key={index} review={review} />
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-8 text-center">
-                            <p className="text-gray-400">Ainda não há reviews para este conteúdo. Seja o primeiro a avaliar!</p>
-                        </div>
-                    )}
+                    <ReviewList
+                        reviews={reviews}
+                        loadMore={handleLoadMore}
+                        isLoading={loading && reviews.length > 0}
+                        hasMore={!pageInfo.isLast}
+                    />
                 </div>
             </div>
         </div>
