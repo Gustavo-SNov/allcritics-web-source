@@ -1,7 +1,7 @@
 "use client"
 
 import {useParams} from "next/navigation";
-import ContentCarousel from "@/components/features/ContentCarousel";
+import ContentCarousel from "@/components/features/carousels/ContentCarousel";
 import {capitalizeFirstLetter} from "@/lib/utils";
 import {useCategory} from "@/hooks/useCategory";
 import {useCallback, useEffect, useState} from "react";

@@ -5,13 +5,20 @@ import {PaginationParams} from "@/types/Pagination";
 export const REVIEW_URL = "/review";
 
 export interface Review {
-    idReview: number;
+    idReview: number | null;
     title: string;
     rate: number;
     comment: string;
-    createdAt: Date;
+    createdAt?: Date;
     content: Content;
     user: User;
+}
+
+export interface ReviewCreate{
+    idContent: string | number;
+    title: string;
+    rate: number;
+    comment: string;
 }
 
 export interface ReviewFilter extends PaginationParams{

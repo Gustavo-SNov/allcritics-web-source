@@ -5,6 +5,7 @@ import {Content, PageContentType,  ContentsParams} from "@/types/Content";
 
 export const useContent = () => {
     const [pageData, setPageData] = useState<PageContentType<Content> | null>(null);
+    const [content, setContent] = useState<Content | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -25,9 +26,23 @@ export const useContent = () => {
         }, []
     );
 
+    const fetchContent = useCallback(async (idContent: string | number) => {
+        setLoading(true);
+        setError(null);
+        try {
+            const data = await contentService.getContentById(idContent);
+            setContent(data);
+        } catch (error) {
+            console.error("Erro ao carregar os conteúdos: ", error);
+            setError("Não foi possível carregar o conteúdo. Tente novamente mais tarde.");
+        } finally {
+            setLoading(false);
+        }
+    }, []);
 
     return {
         contents: pageData?.content || [],
+        content,
         pageInfo: { // Informações úteis para a UI de paginação
             totalPages: pageData?.totalPages || 0,
             totalElements: pageData?.totalElements || 0,
@@ -38,5 +53,6 @@ export const useContent = () => {
         loading,
         error,
         fetchContents,
+        fetchContent,
     }
 }

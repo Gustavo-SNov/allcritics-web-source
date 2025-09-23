@@ -9,7 +9,7 @@ import Image from "next/image";
 
 const ReviewCard = (review: Review) => {
 
-    const reviewDate = new Date(review.createdAt)
+    const reviewDate = new Date(review.createdAt || Date.now());
 
     const formattedRelativeDate: string = formatDistanceToNow(reviewDate, {
         addSuffix: true, // Adiciona o prefixo/sufixo ("há" ou "em")
@@ -23,7 +23,7 @@ const ReviewCard = (review: Review) => {
                     {/* User Info */}
                     <div className="flex-shrink-0">
                         <Avatar className="w-12 h-12">
-                            <AvatarImage src={review.user.profileImageUrl}/>
+                            <AvatarImage src={review.user.profileImgUrl}/>
                             <AvatarFallback className="bg-purple-600 text-white">
                                 {review.user.username.substring(0, 2)}
                             </AvatarFallback>
@@ -53,6 +53,7 @@ const ReviewCard = (review: Review) => {
                         </div>
 
                         {/* Review Text */}
+                        <h3 className="font-semibold text-white">{review.title}</h3>
                         <p className="text-gray-300 leading-relaxed">{review.comment}</p>
 
                         {/* Content Card */}
@@ -60,7 +61,7 @@ const ReviewCard = (review: Review) => {
                             <div
                                 className="w-12 h-16 bg-gradient-to-br from-gray-600 to-gray-800 rounded flex items-center justify-center text-xs text-gray-400">
                                 <Image
-                                    src={review.content.imageURL}
+                                    src={review.content?.imageURL || ""}
                                     alt={`Poster de ${review.content.title}`}
                                     width={300}
                                     height={400}

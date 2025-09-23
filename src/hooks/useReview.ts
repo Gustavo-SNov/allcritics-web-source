@@ -1,18 +1,23 @@
 import {useCallback, useState} from "react";
 import {reviewService} from "@/services/reviewService";
-import {ReviewFilter, Review} from "@/types/Review";
+import {ReviewFilter, Review, ReviewCreate} from "@/types/Review";
 import {Page} from "@/types/Pagination";
 
 export const useReview = () => {
     const [pageData, setPageData] = useState<Page<Review> | null>(null);
+    const [review, setReview] = useState<Review | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
+
+    const [lastFilter, setLastFilter] = useState<ReviewFilter | null>(null);
 
     const fetchReviews = useCallback(async (
         reviewFilter?: ReviewFilter,
     ) => {
         setLoading(true);
         setError(null);
+        setLastFilter(reviewFilter || null);
+
         try {
             const data = await reviewService.getReviews(reviewFilter);
             setPageData(data);
@@ -30,6 +35,7 @@ export const useReview = () => {
         let review: Review | null = null;
         try {
             review = await reviewService.getReviewById(idReview);
+
         } catch (error) {
             console.error("Erro ao carregar a review: ", error);
             setError("Não foi possível carregar o review. Tente novamente mais tarde.");
@@ -52,19 +58,21 @@ export const useReview = () => {
         }
     }, [])
 
-    const createReview = useCallback(async (review: Review): Promise<Review> => {
+    const createReview = useCallback(async (review: ReviewCreate): Promise<void> => {
         setLoading(true);
         setError(null);
         try {
-            review = await reviewService.postReview(review);
+            const newReview = await reviewService.postReview(review);
+            if (lastFilter) {
+                await fetchReviews(lastFilter);
+            }
         } catch (error) {
             console.error("Erro ao criar a review: ", error);
             setError("Não foi possível criar a review. Tente novamente mais tarde.");
         } finally {
             setLoading(false);
         }
-        return review;
-    }, []);
+    }, [fetchReviews, lastFilter]);
 
     const updateReview = useCallback(async (idReview: number | string, review: Review): Promise<Review> => {
         setLoading(true);
@@ -82,6 +90,7 @@ export const useReview = () => {
 
     return {
         reviews: pageData?.content || [],
+        review,
         pageInfo: { // Informações úteis para a UI de paginação
             totalPages: pageData?.totalPages || 0,
             totalElements: pageData?.totalElements || 0,

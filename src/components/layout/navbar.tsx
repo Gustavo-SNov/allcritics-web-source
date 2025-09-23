@@ -7,9 +7,10 @@ import {useAuth} from "@/contexts/AuthContext";
 import AuthModal from "@/components/features/AuthModal";
 
 import {Avatar, AvatarImage} from "@/components/ui/avatar";
+import {Button} from "@/components/ui/button";
 
 const Navbar = () => {
-    const { user, login, register } = useAuth();
+    const {user, login, register, logout} = useAuth();
 
     return (
         <nav className="bg-gray-900/95 backdrop-blur-sm border-b border-gray-800 sticky top-0 z-50">
@@ -19,26 +20,41 @@ const Navbar = () => {
 
                     <div className="hidden md:flex items-center space-x-8">
                         <Link href="/home" className="text-gray-300 hover:text-white transition-colors">Home</Link>
-                        <Link href="/content/movie" className="text-gray-300 hover:text-white transition-colors">Movies</Link>
-                        <Link href="/content/serie" className="text-gray-300 hover:text-white transition-colors">Series</Link>
-                        <Link href="/content/game" className="text-gray-300 hover:text-white transition-colors">Games</Link>
+                        <Link href="/content/movie"
+                              className="text-gray-300 hover:text-white transition-colors">Movies</Link>
+                        <Link href="/content/serie"
+                              className="text-gray-300 hover:text-white transition-colors">Series</Link>
+                        <Link href="/content/game"
+                              className="text-gray-300 hover:text-white transition-colors">Games</Link>
                     </div>
 
-                    <SearchBar />
+                    <SearchBar/>
 
                     <div className="hidden md:flex items-center space-x-4">
                         {user ? (
-                            <Link href={`/profile/${user.username}`} className="flex items-center space-x-2 hover:bg-gray-800 p-2 rounded-lg transition-colors">
-                                <div className="w-12 h-10 flex items-center justify-center">
-                                    <Avatar className="w-full h-full object-cover">
-                                        <AvatarImage src={user.profileImageUrl}/>
-                                    </Avatar>
+                            <>
+                                <Link href={`/profile/${user.username}`}
+                                      className="flex items-center space-x-2 hover:bg-gray-800 p-2 rounded-lg transition-colors">
+                                    <div className="w-12 h-10 flex items-center justify-center">
+                                        <Avatar className="w-full h-full object-cover">
+                                            <AvatarImage src={user.profileImgUrl}/>
+                                        </Avatar>
 
-                                </div>
-                                <span className="text-white">{user.username}</span>
-                            </Link>
+                                    </div>
+                                    <span className="text-white">{user.username}</span>
+                                </Link>
+                                <Button
+                                    size="lg"
+                                    className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-6 text-lg rounded-full transition-all duration-300 hover:scale-105"
+                                    onClick={() => logout()}
+                                >
+                                    logout
+                                </Button>
+                            </>
+
+
                         ) : (
-                         <AuthModal login={login} register={register}/>
+                            <AuthModal login={login} register={register}/>
                         )}
                     </div>
 

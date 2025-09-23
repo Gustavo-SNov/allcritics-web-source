@@ -11,7 +11,7 @@ export const contentService = {
         return response.data;
     },
 
-    getContentById: async (idContent: number): Promise<Content> => {
+    getContentById: async (idContent: string |number): Promise<Content> => {
         const CONTENT_ID_URL = `${CONTENT_URL}/${idContent}`;
         const response = await api.get<Content>(CONTENT_ID_URL);
         return response.data;

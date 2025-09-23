@@ -1,6 +1,6 @@
 "use client"
 
-import ContentCarousel from "@/components/features/ContentCarousel";
+import ContentCarousel from "@/components/features/carousels/ContentCarousel";
 
 const TrendingContent = () => {
 

@@ -4,26 +4,18 @@ import TrendingContent from "@/components/features/TrendingContent";
 import {Carousel} from "@/components/ui/carousel/Carousel";
 import {CardAllCritics} from "@/components/features/cards/CardAllCritics";
 import {useReview} from "@/hooks/useReview";
-// import {useAuth} from "@/hooks/useAuth";
 import {useEffect} from "react";
 
 export default function Home() {
     const {reviews, fetchReviews} = useReview();
-    // const {register} = useAuth();
     useEffect(() => {
         const fetchData = async () => {
             try {
                 await fetchReviews();
-                // await register({
-                //     username: "GSNOVAIS 2",
-                //     email: "gsnovais2@gmail.com",
-                //     password: "gsnovais12345"
-                // })
             } catch (error) {
                 console.error("Ocorreu um erro ao buscar os dados:", error);
             }
         }
-
         fetchData();
     }, [fetchReviews]);
 
@@ -40,7 +32,6 @@ export default function Home() {
                     <CardAllCritics variant="review" key={index} review={review}/>
                 ))}
             </Carousel>
-
             <TrendingContent/>
         </div>
     );
