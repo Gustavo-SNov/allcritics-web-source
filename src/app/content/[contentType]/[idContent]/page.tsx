@@ -9,7 +9,7 @@ import ReviewForm from "@/components/features/reviews/ReviewForm";
 import {useAuth} from "@/contexts/AuthContext";
 import ReviewList from "@/components/features/reviews/ReviewList";
 
-const PAGE_SIZE = 2;
+const PAGE_SIZE = 4;
 
 const ContentPage = () => {
     const params = useParams();
@@ -41,19 +41,6 @@ const ContentPage = () => {
             });
         }
     }, [loading, pageInfo, idContent, fetchReviews]);
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             await fetchReviews({idContent: idContent, sort: "createdAt,desc", page: page, size: 4});
-    //             await fetchContent(idContent);
-    //         } catch (error) {
-    //             console.error("Ocorreu um erro ao buscar os dados:", error);
-    //         }
-    //     }
-    //     fetchData();
-    // }, [fetchReviews, fetchContent, idContent]);
-
 
     return (
         <div className="bg-gray-900 text-white min-h-screen">

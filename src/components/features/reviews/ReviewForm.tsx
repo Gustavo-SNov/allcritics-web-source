@@ -4,9 +4,8 @@ import React, {useState} from "react";
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger} from "@/components/ui/dialog"
 import {Button} from "@/components/ui/button"
 import {Content} from "@/types/Content"
-import {User} from "@/types/User"
 import {SquarePlus, Star} from "lucide-react";
-import {Review, ReviewCreate} from "@/types/Review";
+import {ReviewCreate} from "@/types/Review";
 import {Textarea} from "@/components/ui/textArea";
 import {Input} from "@/components/ui/input";
 

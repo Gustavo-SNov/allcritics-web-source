@@ -72,7 +72,7 @@ export const useReview = () => {
         try {
             const newReview = await reviewService.postReview(review);
             if (lastFilter) {
-                await fetchReviews(lastFilter);
+                await fetchReviews({ ...lastFilter, page: 0 });
             }
         } catch (error) {
             console.error("Erro ao criar a review: ", error);
