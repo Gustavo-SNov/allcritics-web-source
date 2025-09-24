@@ -25,7 +25,6 @@ const Profile = () => {
         const fetchData = async () => {
             try {
                 await fetchUserByUsername(username);
-                a
             } catch (error) {
                 console.error("Ocorreu um erro ao buscar os dados:", error);
             }
@@ -37,7 +36,7 @@ const Profile = () => {
         <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
             <div className="container mx-auto px-4 py-8">
                 <div className="space-y-8">
-                    <ProfileHeader userProfile={user}/>
+                    <ProfileHeader userProfile={user} onUpdate={() => fetchUserByUsername(username)}/>
 
                     <ProfileStatistics/>
 
