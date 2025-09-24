@@ -37,7 +37,6 @@ export interface PageContentType<T> {
     last?: boolean;
 }
 
-
 export interface ContentFilter {
     contentType?: ContentType;
     category?: string;
@@ -48,4 +47,3 @@ export interface ContentsParams extends PaginationParams {
     contentType?: ContentType;
     category?: string;
 }
-

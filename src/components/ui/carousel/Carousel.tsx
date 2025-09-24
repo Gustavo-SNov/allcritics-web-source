@@ -5,7 +5,7 @@ import React from "react"
 import { MultiItemCarousel } from "@/components/ui/carousel/MultiItemCarousel"
 import {HeroCarousel} from "@/components/ui/carousel/HeroCarousel";
 import {CarouselProps} from "@/types/Carousel";
-import ReviewCarousel from "@/components/features/ReviewCarousel";
+import ReviewCarousel from "@/components/features/carousels/ReviewCarousel";
 
 export const Carousel = ({ variant, ...props }: CarouselProps) => {
     switch (variant) {

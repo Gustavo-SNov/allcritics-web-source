@@ -1,7 +1,7 @@
 "use client"
 
 import {useParams} from "next/navigation";
-import ContentCarousel from "@/components/features/ContentCarousel";
+import ContentCarousel from "@/components/features/carousels/ContentCarousel";
 import {capitalizeFirstLetter} from "@/lib/utils";
 import {useCategory} from "@/hooks/useCategory";
 import {useCallback, useEffect, useState} from "react";
@@ -12,11 +12,12 @@ const CAROUSELS_PER_LOAD = 3;
 
 const ContentPage = () => {
     const params = useParams();
+    const typeParam = (params.contentType as string).toUpperCase();
     const [nextIndex, setNextIndex] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const {categories, fetchCategories} = useCategory();
     const [visibleCarousels, setVisibleCarousels] = useState<Category[]>(categories.slice(0,CAROUSELS_PER_LOAD))
-    const typeParam = (params.contentType as string).toUpperCase();
+
 
     const loadMoreCarousels = useCallback(() => {
         if (isLoading || nextIndex >= categories.length || categories.length === 0) return;

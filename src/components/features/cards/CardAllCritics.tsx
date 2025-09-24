@@ -9,7 +9,10 @@ import ReviewCard from "@/components/features/cards/ReviewCard";
 export const CardAllCritics = ({ variant,content, review}: CardProps) => {
     switch (variant) {
         case 'hero':
-            return content ? <HeroCard {...content}  /> : null;
+            return content ?
+                <HeroCard {...content}  />
+
+                : null;
         case 'hover-card':
             return content ? <HoverCard {...content}  /> : null;
         case 'review':

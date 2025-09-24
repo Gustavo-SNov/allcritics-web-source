@@ -1,5 +1,5 @@
 import api from "@/lib/api";
-import {REVIEW_URL, Review, ReviewFilter} from "@/types/Review";
+import {REVIEW_URL, Review, ReviewFilter, ReviewCreate} from "@/types/Review";
 import {Page} from "@/types/Pagination"
 
 const getReviewUrlById = (idReview: number | string) => `${REVIEW_URL}/${idReview}`;
@@ -28,7 +28,7 @@ export const reviewService = {
         return response.data;
     },
 
-    postReview: async (review: Review): Promise<Review> => {
+    postReview: async (review: ReviewCreate): Promise<Review> => {
         const response = await api.post<Review>(REVIEW_URL, review);
         return response.data;
     },
