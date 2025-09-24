@@ -25,6 +25,7 @@ const Profile = () => {
         const fetchData = async () => {
             try {
                 await fetchUserByUsername(username);
+                a
             } catch (error) {
                 console.error("Ocorreu um erro ao buscar os dados:", error);
             }

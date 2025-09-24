@@ -8,6 +8,7 @@ import Image from "next/image";
 import ReviewForm from "@/components/features/reviews/ReviewForm";
 import {useAuth} from "@/contexts/AuthContext";
 import ReviewList from "@/components/features/reviews/ReviewList";
+import ContentDetails from "./components/ContentDetails";
 
 const PAGE_SIZE = 4;
 
@@ -61,37 +62,40 @@ const ContentPage = () => {
                     </div>
 
                     {/* Informações do Conteúdo */}
-                    <div className="w-full md:w-2/3 flex flex-col space-y-4">
-                        <h1 className="text-4xl lg:text-5xl font-bold tracking-tight">{content?.title}</h1>
-                        <span className="text-lg text-purple-400 font-semibold capitalize">
+                    <div className="w-full md:w-2/3 flex flex-col">
+                        <div className="space-y-4">
+                            <h1 className="text-4xl lg:text-5xl font-bold tracking-tight">{content?.title}</h1>
+                            <span className="text-lg text-purple-400 font-semibold capitalize">
                             {content?.contentType} &bull; {new Date(content?.releaseDate || Date.now()).getFullYear()}
                         </span>
-                        <p className="text-gray-300 leading-relaxed text-lg">
-                            {content?.description}
-                        </p>
-
+                            <p className="text-gray-300 leading-relaxed text-lg">
+                                {content?.description}
+                            </p>
+                        </div>
+                        <ContentDetails content={content}/>
+                        {/* Formulário para Novo Review */}
+                        <div className="my-8 flex justify-center">
+                            {
+                                content && user ?
+                                    <ReviewForm content={content} createReview={createReview}/>
+                                    : null
+                            }
+                        </div>
+                        {/* --- Seção de Reviews --- */}
+                        <div className="mt-10 pt-8 border-t border-gray-700">
+                            <h2 className="text-3xl font-bold mb-6">Community Reviews</h2>
+                            <ReviewList
+                                reviews={reviews}
+                                loadMore={handleLoadMore}
+                                isLoading={loading && reviews.length > 0}
+                                hasMore={!pageInfo.isLast}
+                            />
+                        </div>
                     </div>
+
                 </div>
 
-                {/* --- Seção de Reviews --- */}
-                <div className="mt-12 pt-8 border-t border-gray-700">
-                    <h2 className="text-3xl font-bold mb-6">Community Reviews</h2>
 
-                    {/* Formulário para Novo Review */}
-                    <div className="mb-8">
-                        {
-                            content && user ?
-                                <ReviewForm content={content} createReview={createReview}/>
-                                : null
-                        }
-                    </div>
-                    <ReviewList
-                        reviews={reviews}
-                        loadMore={handleLoadMore}
-                        isLoading={loading && reviews.length > 0}
-                        hasMore={!pageInfo.isLast}
-                    />
-                </div>
             </div>
         </div>
     )

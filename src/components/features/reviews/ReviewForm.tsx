@@ -11,6 +11,7 @@ import {Input} from "@/components/ui/input";
 
 interface ReviewFormProps {
     content: Content;
+
     createReview(review: ReviewCreate): Promise<void>;
 }
 
@@ -26,11 +27,11 @@ const ReviewForm = ({content, createReview}: ReviewFormProps) => {
 
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>): Promise<void> => {
         event.preventDefault();
-        try{
+        try {
             await createReview(review);
             setOpen(!open);
         } catch (error) {
-            console.error("Falha ao criar o review",error);
+            console.error("Falha ao criar o review", error);
         }
     }
 
@@ -38,7 +39,8 @@ const ReviewForm = ({content, createReview}: ReviewFormProps) => {
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <Button variant="outline"
-                        className="bg-transparent border-purple-500 text-purple-400 hover:bg-purple-500 hover:text-white">
+                        className="bg-transparent border-purple-500 text-purple-400 hover:bg-purple-500 hover:text-white
+                                   px-8 py-3 text-lg font-semibold rounded-lg transition-all duration-300">
                     Create Review
                 </Button>
             </DialogTrigger>
@@ -55,7 +57,7 @@ const ReviewForm = ({content, createReview}: ReviewFormProps) => {
                                 <Star
                                     key={star}
                                     className={`w-7 h-7 cursor-pointer transition-colors ${
-                                        star <= (hoverRating || review.rate) 
+                                        star <= (hoverRating || review.rate)
                                             ? 'text-yellow-400 fill-yellow-400'
                                             : 'text-gray-600'
                                     }`}
